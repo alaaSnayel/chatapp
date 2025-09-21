@@ -1,9 +1,8 @@
-package com.alaa.chat.controller;
+package com.alaa.chat.chat_app_backend.repositories.controller;
 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
