@@ -1,4 +1,4 @@
-package com.alaa.chat.chat_app_backend.repositories.controller;
+package com.alaa.chat.chat_app_backend.controller;
 
 import java.util.List;
 
