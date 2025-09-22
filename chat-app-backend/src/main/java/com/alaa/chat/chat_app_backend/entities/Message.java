@@ -1,7 +1,6 @@
 package com.alaa.chat.chat_app_backend.entities;
 
 import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
