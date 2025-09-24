@@ -1,19 +1,10 @@
 // import "./App.css";
-
-import toast from "react-hot-toast";
+import JoinCreateChat from "./components/JoinCreateChat";
 
 function App() {
   return (
     <div className="">
-      <h1>App page</h1>
-      <button
-        className=" bg-amber-400"
-        onClick={() => {
-          toast.success("dsfsfe");
-        }}
-      >
-        click me
-      </button>
+      <JoinCreateChat />
     </div>
   );
 }
