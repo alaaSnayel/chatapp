@@ -42,7 +42,11 @@ const JoinCreateChat = () => {
         joinChat();
       } catch (error) {
         console.log(error);
-        toast.error("Room can't be created");
+        if (error.status === 400) {
+          toast.error("Room Id already exists");
+        } else {
+          toast.error("Room can't be created");
+        }
       }
     }
   }
