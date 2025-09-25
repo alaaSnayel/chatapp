@@ -8,7 +8,7 @@ export const ChatProvider = ({ children }) => {
 
   return (
     <ChatContext.Provider
-      value={(roomId, setRoomId, currentUser, setCurrentUser)}
+      value={{ roomId, setRoomId, currentUser, setCurrentUser }}
     >
       {children}
     </ChatContext.Provider>

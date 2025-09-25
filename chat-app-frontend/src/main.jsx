@@ -4,7 +4,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./config/Routes.jsx";
 import { Toaster } from "react-hot-toast";
-import { ChatProvider } from "./context/chatContext.js";
+import { ChatProvider } from "./context/chatContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
