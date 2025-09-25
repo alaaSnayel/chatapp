@@ -15,7 +15,7 @@ import com.alaa.chat.chat_app_backend.playload.MessageRequest;
 import com.alaa.chat.chat_app_backend.repositories.RoomRepository;
 
 @Controller
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:5173")
 public class ChatController {
 
   private RoomRepository roomRepository;

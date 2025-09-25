@@ -19,7 +19,7 @@ import com.alaa.chat.chat_app_backend.repositories.RoomRepository;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:5173")
 public class RoomController {
   private RoomRepository roomRepository;
 
