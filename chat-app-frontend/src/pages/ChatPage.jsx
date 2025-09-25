@@ -112,25 +112,6 @@ const ChatPage = () => {
             </div>
           );
         })}
-
-        {/* Example Messages */}
-        {/* <div className="flex justify-start">
-          <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded-lg max-w-xs">
-            Hello! Welcome to the room.
-          </div>
-        </div>
-
-        <div className="flex justify-end">
-          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg max-w-xs">
-            Hi! Thanks!
-          </div>
-        </div>
-
-        <div className="flex justify-start">
-          <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded-lg max-w-xs">
-            How are you today?
-          </div>
-        </div> */}
       </main>
 
       {/* Input Area */}
@@ -144,7 +125,7 @@ const ChatPage = () => {
             />
             <button
               type="button"
-              className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+              className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:bg-gray-800 rounded-full p-2 dark:hover:text-gray-100"
             >
               <MdAttachFile size={24} />
             </button>
