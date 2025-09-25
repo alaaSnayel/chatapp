@@ -1,5 +1,10 @@
-import React, { useRef, useState } from "react";
-import { MdAttachFile, MdSend } from "react-icons/md";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  MdAttachFile,
+  MdDarkMode,
+  MdOutlineWbSunny,
+  MdSend,
+} from "react-icons/md";
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([
@@ -25,6 +30,24 @@ const ChatPage = () => {
   const chatBoxRef = useRef(null);
   const [stompClient, setStompClient] = useState(null);
 
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
+
   return (
     <div className="h-screen bg-gray-100 dark:bg-gray-950 dark:text-white flex flex-col">
       {/* Header */}
@@ -36,10 +59,22 @@ const ChatPage = () => {
         <h2 className="text-lg sm:text-xl font-semibold">
           User: <span>Alaa Sayed</span>
         </h2>
+        <div className="flex gap-4">
+          <button
+            onClick={toggleDarkMode}
+            className="w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-blue-300 text-yellow-500 rounded-full hover:text-yellow-600 transition"
+          >
+            {darkMode ? (
+              <MdOutlineWbSunny size={24} />
+            ) : (
+              <MdDarkMode size={24} />
+            )}
+          </button>
 
-        <button className="bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base cursor-pointer px-4 py-2 rounded-md">
-          Leave Room
-        </button>
+          <button className="bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base cursor-pointer px-4 py-2 rounded-md">
+            Leave Room
+          </button>
+        </div>
       </header>
 
       {/* Messages Area */}
