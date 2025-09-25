@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import chatIcon from "../assets/chat.png";
 import toast from "react-hot-toast";
+import { createRoom } from "../services/RoomService";
 
 const JoinCreateChat = () => {
   const [details, setDetails] = useState({
@@ -30,10 +31,19 @@ const JoinCreateChat = () => {
     }
   }
 
-  function createRoom() {
+  async function handleCreateRoom() {
     if (validateForm()) {
       // Create Room
-      console.log("wdad");
+      try {
+        const response = await createRoom(details.roomId);
+        console.log(response);
+
+        toast.success("Room created successfully");
+        joinChat();
+      } catch (error) {
+        console.log(error);
+        toast.error("Room can't be created");
+      }
     }
   }
 
@@ -88,7 +98,7 @@ const JoinCreateChat = () => {
             Join Room
           </button>
           <button
-            onClick={createRoom}
+            onClick={handleCreateRoom}
             className="w-1/2 cursor-pointer bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition"
           >
             Create Room
