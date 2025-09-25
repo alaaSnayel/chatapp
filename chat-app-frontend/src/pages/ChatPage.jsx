@@ -1,0 +1,127 @@
+import React, { useRef, useState } from "react";
+import { MdAttachFile, MdSend } from "react-icons/md";
+
+const ChatPage = () => {
+  const [messages, setMessages] = useState([
+    {
+      content: "Hello",
+      sender: "Aliaa",
+    },
+    {
+      content: "Hello",
+      sender: "Aliaa",
+    },
+    {
+      content: "Hello",
+      sender: "Alaa",
+    },
+    {
+      content: "Hellorrrrrrrrrrrrrrrrr",
+      sender: "Aliaa",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const inputRef = useRef(null);
+  const chatBoxRef = useRef(null);
+  const [stompClient, setStompClient] = useState(null);
+
+  return (
+    <div className="h-screen bg-gray-100 dark:bg-gray-950 dark:text-white flex flex-col">
+      {/* Header */}
+      <header className="p-4 flex justify-between items-center bg-blue-500 text-white text-xl font-semibold shadow">
+        <p className="text-sm sm:text-base">
+          Room: <span className="font-bold">64165</span>
+        </p>
+
+        <h2 className="text-lg sm:text-xl font-semibold">
+          User: <span>Alaa Sayed</span>
+        </h2>
+
+        <button className="bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base cursor-pointer px-4 py-2 rounded-md">
+          Leave Room
+        </button>
+      </header>
+
+      {/* Messages Area */}
+      <main className="flex-1 p-4 overflow-y-auto space-y-3">
+        {messages.map((message, index) => {
+          const isMine = message.sender === "Alaa";
+
+          return (
+            <div
+              key={index}
+              className={`flex items-end gap-2 ${
+                isMine ? "justify-end" : "justify-start"
+              }`}
+            >
+              {!isMine && (
+                <img
+                  src="https://avatar.iran.liara.run/public/39"
+                  alt="avatar"
+                  className="w-8 h-8 rounded-full"
+                />
+              )}
+
+              <div
+                className={`px-4 py-2 rounded-lg max-w-xs ${
+                  isMine
+                    ? "bg-blue-500 text-white rounded-br-none"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-bl-none"
+                }`}
+              >
+                {!isMine && (
+                  <p className="text-xs font-semibold mb-1">{message.sender}</p>
+                )}
+                <p>{message.content}</p>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Example Messages */}
+        {/* <div className="flex justify-start">
+          <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded-lg max-w-xs">
+            Hello! Welcome to the room.
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg max-w-xs">
+            Hi! Thanks!
+          </div>
+        </div>
+
+        <div className="flex justify-start">
+          <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded-lg max-w-xs">
+            How are you today?
+          </div>
+        </div> */}
+      </main>
+
+      {/* Input Area */}
+      <footer className="p-4 bg-white dark:bg-gray-900">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <div className="relative flex-1">
+            <input
+              type="text"
+              placeholder="Type your message..."
+              className="w-full px-12 py-3 rounded-full border border-gray-300 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
+            />
+            <button
+              type="button"
+              className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+            >
+              <MdAttachFile size={24} />
+            </button>
+          </div>
+
+          <button className="w-12 h-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full cursor-pointer">
+            <MdSend size={24} />
+          </button>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default ChatPage;
