@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import chatIcon from "../assets/chat.png";
 import toast from "react-hot-toast";
 import { createRoom } from "../services/RoomService";
+import useChatContext from "../context/chatContext";
+import { useNavigate } from "react-router";
 
 const JoinCreateChat = () => {
   const [details, setDetails] = useState({
     roomId: "",
     userName: "",
   });
+
+  const {
+    roomId,
+    setRoomId,
+    currentUser,
+    setCurrentUser,
+    connected,
+    setConnected,
+  } = useChatContext();
+
+  const navigate = useNavigate();
 
   function handleFormInputChange(event) {
     setDetails({
@@ -39,7 +52,15 @@ const JoinCreateChat = () => {
         console.log(response);
 
         toast.success("Room created successfully");
-        joinChat();
+
+        setCurrentUser(details.userName);
+        setRoomId(details.roomId);
+        setConnected(true);
+
+        // Forward to chat page
+        navigate("/chat");
+
+        // Errors
       } catch (error) {
         console.log(error);
         if (error.status === 400) {

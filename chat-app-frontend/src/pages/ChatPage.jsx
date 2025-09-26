@@ -125,7 +125,7 @@ const ChatPage = () => {
             />
             <button
               type="button"
-              className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:bg-gray-800 rounded-full p-2 dark:hover:text-gray-100"
+              className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:bg-gray-800 hover:text-white rounded-full p-2 dark:hover:text-gray-100"
             >
               <MdAttachFile size={24} />
             </button>
