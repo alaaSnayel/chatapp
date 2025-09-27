@@ -29,15 +29,15 @@ const ChatPage = () => {
     },
     {
       content: "Hello",
-      sender: "Aliaa",
+      sender: "Mohammed",
     },
     {
       content: "Hello",
-      sender: "Alaa",
+      sender: "hesham",
     },
     {
       content: "Hellorrrrrrrrrrrrrrrrr",
-      sender: "Aliaa",
+      sender: "noura",
     },
   ]);
   const [input, setInput] = useState("");
@@ -69,10 +69,23 @@ const ChatPage = () => {
     };
 
     connectWebSocket();
+
     // stomp client
   }, [room]);
 
   // send message handle
+  const sendMessage = async () => {
+    if (stompClient && connected && input.trim()) {
+      const message = {
+        sender: currentUser,
+        content: input,
+        roomId: room,
+      };
+
+      stompClient.send(`/app/sendMessage/${room}`, {}, JSON.stringify(message));
+      setInput("");
+    }
+  };
 
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -124,7 +137,8 @@ const ChatPage = () => {
       {/* Messages Area */}
       <main className="flex-1 p-4 overflow-y-auto space-y-3">
         {messages.map((message, index) => {
-          const isMine = message.sender === "Alaa";
+          const isMine = message.sender === currentUser;
+          const firstLetter = message.sender.charAt(0).toUpperCase();
 
           return (
             <div
@@ -134,11 +148,9 @@ const ChatPage = () => {
               }`}
             >
               {!isMine && (
-                <img
-                  src="https://avatar.iran.liara.run/public/39"
-                  alt="avatar"
-                  className="w-8 h-8 rounded-full"
-                />
+                <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                  <span className="text-white font-bold">{firstLetter}</span>
+                </div>
               )}
 
               <div
@@ -163,6 +175,10 @@ const ChatPage = () => {
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="relative flex-1">
             <input
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
               type="text"
               placeholder="Type your message..."
               className="w-full px-12 py-3 rounded-full border border-gray-300 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
@@ -175,7 +191,10 @@ const ChatPage = () => {
             </button>
           </div>
 
-          <button className="w-12 h-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full cursor-pointer">
+          <button
+            onClick={sendMessage}
+            className="w-12 h-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full cursor-pointer"
+          >
             <MdSend size={24} />
           </button>
         </div>
