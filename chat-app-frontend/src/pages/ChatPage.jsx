@@ -11,6 +11,7 @@ import useChatContext from "../context/chatContext";
 import { useNavigate } from "react-router";
 import { baseURL } from "../config/AxiosHelper";
 import toast from "react-hot-toast";
+import { getMessages } from "../services/RoomService";
 
 const ChatPage = () => {
   const { roomId: room, currentUser, connected } = useChatContext();
@@ -22,24 +23,7 @@ const ChatPage = () => {
     }
   }, [connected, room, currentUser]);
 
-  const [messages, setMessages] = useState([
-    {
-      content: "Hello",
-      sender: "Aliaa",
-    },
-    {
-      content: "Hello",
-      sender: "Mohammed",
-    },
-    {
-      content: "Hello",
-      sender: "hesham",
-    },
-    {
-      content: "Hellorrrrrrrrrrrrrrrrr",
-      sender: "noura",
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
   const chatBoxRef = useRef(null);
@@ -47,6 +31,18 @@ const ChatPage = () => {
 
   // page initialization
   // messages need to be loaded
+  useEffect(() => {
+    async function loadMessages() {
+      try {
+        const messages = await getMessages(room);
+        sendMessage(messages);
+      } catch (error) {
+        console.log(error);
+        toast.error("Faild to get teh messages");
+      }
+    }
+    loadMessages();
+  }, []);
 
   // Initialize and load STOMP client
   // subscribtion

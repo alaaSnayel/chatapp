@@ -12,12 +12,19 @@ export const createRoom = async (roomDetails) => {
   }
 };
 
-export const joinChatApi = async (roomid) => {
+export const joinChatApi = async (roomId) => {
   try {
-    const response = await HttpClient.get(`api/v1/rooms/${roomid}`);
+    const response = await HttpClient.get(`api/v1/rooms/${roomId}`);
     return response.data;
   } catch (error) {
     console.error("Error joining room:", error);
     throw error;
   }
+};
+
+export const getMessages = async (roomId, size = 50, page = 0) => {
+  const response = await HttpClient.get(
+    `api/v1/rooms/${roomId}/messages?size=${size}&page=${page}`
+  );
+  return response.data;
 };
