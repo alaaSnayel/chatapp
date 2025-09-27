@@ -211,6 +211,12 @@ const ChatPage = () => {
               onChange={(e) => {
                 setInput(e.target.value);
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
               type="text"
               placeholder="Type your message..."
               className="w-full px-12 py-3 rounded-full border border-gray-300 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
