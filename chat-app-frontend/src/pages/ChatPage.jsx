@@ -44,6 +44,16 @@ const ChatPage = () => {
     loadMessages();
   }, []);
 
+  // Scroll down
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scroll({
+        top: chatBoxRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
+
   // Initialize and load STOMP client
   // subscribtion
   useEffect(() => {
@@ -131,7 +141,7 @@ const ChatPage = () => {
       </header>
 
       {/* Messages Area */}
-      <main className="flex-1 p-4 overflow-y-auto space-y-3">
+      <main ref={chatBoxRef} className="flex-1 p-4 overflow-y-auto space-y-3">
         {messages.map((message, index) => {
           const isMine = message.sender === currentUser;
           const firstLetter = message.sender.charAt(0).toUpperCase();
