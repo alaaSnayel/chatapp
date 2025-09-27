@@ -12,12 +12,12 @@ services:
       - app-network
 
   boot-app:
-    image: batchlcwd/chatback
+    image: alaasnayel/chatback:latest
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      - SPRING_DATA_MONGODB_URI = mongodb://mongo:27017/chatapp
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/chatapp
     depends_on:
       - mongo
     networks:
