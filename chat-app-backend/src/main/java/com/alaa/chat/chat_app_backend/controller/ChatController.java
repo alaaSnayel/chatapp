@@ -9,13 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.alaa.chat.chat_app_backend.config.AppConstants;
 import com.alaa.chat.chat_app_backend.entities.Message;
 import com.alaa.chat.chat_app_backend.entities.Room;
 import com.alaa.chat.chat_app_backend.playload.MessageRequest;
 import com.alaa.chat.chat_app_backend.repositories.RoomRepository;
 
 @Controller
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin(AppConstants.FRONT_END_DASE_URL)
 public class ChatController {
 
   private RoomRepository roomRepository;

@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alaa.chat.chat_app_backend.config.AppConstants;
 import com.alaa.chat.chat_app_backend.entities.Message;
 import com.alaa.chat.chat_app_backend.entities.Room;
 import com.alaa.chat.chat_app_backend.repositories.RoomRepository;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin(AppConstants.FRONT_END_DASE_URL)
 public class RoomController {
   private RoomRepository roomRepository;
 
