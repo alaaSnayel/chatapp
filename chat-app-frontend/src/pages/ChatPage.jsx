@@ -5,8 +5,23 @@ import {
   MdOutlineWbSunny,
   MdSend,
 } from "react-icons/md";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+import useChatContext from "../context/chatContext";
+import { useNavigate } from "react-router";
+import { baseURL } from "../config/AxiosHelper";
+import toast from "react-hot-toast";
 
 const ChatPage = () => {
+  const { roomId: room, currentUser, connected } = useChatContext();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!connected) {
+      navigate("/");
+    }
+  }, [connected, room, currentUser]);
+
   const [messages, setMessages] = useState([
     {
       content: "Hello",
@@ -29,6 +44,35 @@ const ChatPage = () => {
   const inputRef = useRef(null);
   const chatBoxRef = useRef(null);
   const [stompClient, setStompClient] = useState(null);
+
+  // page initialization
+  // messages need to be loaded
+
+  // Initialize and load STOMP client
+  // subscribtion
+  useEffect(() => {
+    const connectWebSocket = () => {
+      // sockJS
+      const sock = new SockJS(`${baseURL}/chat`);
+
+      const client = Stomp.over(sock);
+
+      client.connect({}, () => {
+        setStompClient(client);
+        toast.success("connected");
+        client.subscribe(`/topic/room/${room}`, (message) => {
+          console.log(message);
+          const newMessage = JSON.parse(message.body);
+          setMessages((prev) => [...prev, newMessage]);
+        });
+      });
+    };
+
+    connectWebSocket();
+    // stomp client
+  }, [room]);
+
+  // send message handle
 
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -53,11 +97,11 @@ const ChatPage = () => {
       {/* Header */}
       <header className="p-4 flex justify-between items-center bg-blue-500 text-white text-xl font-semibold shadow">
         <p className="text-sm sm:text-base">
-          Room: <span className="font-bold">64165</span>
+          Room: <span className="font-bold">{room}</span>
         </p>
 
         <h2 className="text-lg sm:text-xl font-semibold">
-          User: <span>Alaa Sayed</span>
+          User: <span>{currentUser}</span>
         </h2>
         <div className="flex gap-4">
           <button
