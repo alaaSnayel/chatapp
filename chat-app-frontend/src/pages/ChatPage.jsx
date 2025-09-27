@@ -35,7 +35,7 @@ const ChatPage = () => {
     async function loadMessages() {
       try {
         const messages = await getMessages(room);
-        sendMessage(messages);
+        setMessages(messages);
       } catch (error) {
         console.log(error);
         toast.error("Faild to get teh messages");
