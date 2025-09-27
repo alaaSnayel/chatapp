@@ -6,6 +6,7 @@ import {
   MdSend,
 } from "react-icons/md";
 import SockJS from "sockjs-client";
+import { timeAgo } from "../config/helper";
 import { Stomp } from "@stomp/stompjs";
 import useChatContext from "../context/chatContext";
 import { useNavigate } from "react-router";
@@ -14,7 +15,14 @@ import toast from "react-hot-toast";
 import { getMessages } from "../services/RoomService";
 
 const ChatPage = () => {
-  const { roomId: room, currentUser, connected } = useChatContext();
+  const {
+    roomId: room,
+    currentUser,
+    connected,
+    setConnected,
+    setRoomId,
+    setCurrentUser,
+  } = useChatContext();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -25,7 +33,7 @@ const ChatPage = () => {
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
   const chatBoxRef = useRef(null);
   const [stompClient, setStompClient] = useState(null);
 
@@ -41,7 +49,9 @@ const ChatPage = () => {
         toast.error("Faild to get teh messages");
       }
     }
-    loadMessages();
+    if (connected) {
+      loadMessages();
+    }
   }, []);
 
   // Scroll down
@@ -74,7 +84,9 @@ const ChatPage = () => {
       });
     };
 
-    connectWebSocket();
+    if (connected) {
+      connectWebSocket();
+    }
 
     // stomp client
   }, [room]);
@@ -111,6 +123,14 @@ const ChatPage = () => {
     setDarkMode((prev) => !prev);
   };
 
+  function handleLogOut() {
+    stompClient.disconnect();
+    setConnected(false);
+    setRoomId("");
+    setCurrentUser("");
+    navigate("/");
+  }
+
   return (
     <div className="h-screen bg-gray-100 dark:bg-gray-950 dark:text-white flex flex-col">
       {/* Header */}
@@ -134,7 +154,10 @@ const ChatPage = () => {
             )}
           </button>
 
-          <button className="bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base cursor-pointer px-4 py-2 rounded-md">
+          <button
+            onClick={handleLogOut}
+            className="bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base cursor-pointer px-4 py-2 rounded-md"
+          >
             Leave Room
           </button>
         </div>
@@ -160,16 +183,19 @@ const ChatPage = () => {
               )}
 
               <div
-                className={`px-4 py-2 rounded-lg max-w-xs ${
+                className={`px-4 py-2 rounded-lg max-w-xs  break-words whitespace-pre-wrap ${
                   isMine
                     ? "bg-blue-500 text-white rounded-br-none"
                     : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-bl-none"
                 }`}
               >
                 {!isMine && (
-                  <p className="text-xs font-semibold mb-1">{message.sender}</p>
+                  <p className="text-xs font-semibold">{message.sender}</p>
                 )}
                 <p>{message.content}</p>
+                <p className="text-[10px] text-gray-500 dark:text-gray-300">
+                  {timeAgo(message.timeStamp)}
+                </p>
               </div>
             </div>
           );
