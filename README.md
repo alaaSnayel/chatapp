@@ -2,7 +2,7 @@
 
 A full-stack **real-time chat application** with room-based chat, dark mode, and modern web technologies.
 
-![ChatApp Screenshot](ScreenShot%20Tool%20-%20250927131340.png)
+![Screenshot 1]("ScreenShot Tool -20250927131340.png")
 
 ## Features
 
