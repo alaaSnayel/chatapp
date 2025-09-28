@@ -21,10 +21,10 @@ A full-stack **real-time chat application** with room-based chat, dark mode, and
 
 ## Screenshots
 
-1. ![Screenshot 1](0250927131340.png)
-2. ![Screenshot 2](0250927131355.png)
-3. ![Screenshot 3](0250927131414.png)
-4. ![Screenshot 4](0250927131430.png)
+1. ![Screenshot 1](20250927131340.png)
+2. ![Screenshot 2](20250927131355.png)
+3. ![Screenshot 3](20250927131414.png)
+4. ![Screenshot 4](20250927131430.png)
 
 ## Installation
 
